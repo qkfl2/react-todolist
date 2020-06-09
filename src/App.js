@@ -1,17 +1,16 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
   return (
-     <TodoList />
+      <TodoList/>
   );
 }
 
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {value: '', todoList: [], delIdx:[]};
+    this.state = {value: '', todoList: [], delIdx: []};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
@@ -22,7 +21,7 @@ class TodoList extends React.Component {
   }
 
   handleClick(event) {
-    if(this.state.value == '') {
+    if (this.state.value == '') {
       alert('title is empty')
     } else {
       this.state.todoList.push({'value': this.state.value, 'checked': false});
@@ -42,27 +41,27 @@ class TodoList extends React.Component {
   }
 
   newRender() {
-    this.setState({ todoList: this.state.todoList, value: this.state.value })
+    this.setState({todoList: this.state.todoList, value: this.state.value})
   }
 
   render() {
     return (
         <div>
           <h1> TODO LIST </h1>
-            <label>
-              Title :
-              <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            <input type="button" value="Submit" onClick={this.handleClick} />
-            {
-              this.state.todoList.map((item, i) => (
-                  <div>
-                    <input type="checkbox" checked={item.checked} onChange={this.handleCheck.bind(this, item, i)}/>
-                    <span>{item.checked ? <del class='deleted'>{item.value}</del> : item.value}</span>
-                    <input type="button" value="delete" onClick={this.handleDelete.bind(this, i)}/>
-                  </div>
-              ))
-            }
+          <label>
+            Title :
+            <input type="text" value={this.state.value} onChange={this.handleChange}/>
+          </label>
+          <input type="button" value="Submit" onClick={this.handleClick}/>
+          {
+            this.state.todoList.map((item, i) => (
+                <div>
+                  <input type="checkbox" checked={item.checked} onChange={this.handleCheck.bind(this, item, i)}/>
+                  <span>{item.checked ? <del class='deleted'>{item.value}</del> : item.value}</span>
+                  <input type="button" value="delete" onClick={this.handleDelete.bind(this, i)}/>
+                </div>
+            ))
+          }
         </div>
     );
   }
