@@ -22,9 +22,13 @@ class TodoList extends React.Component {
   }
 
   handleClick(event) {
-    this.state.todoList.push({'value': this.state.value, 'checked': false});
-    this.state.value = '';
-    this.newRender();
+    if(this.state.value == '') {
+      alert('title is empty')
+    } else {
+      this.state.todoList.push({'value': this.state.value, 'checked': false});
+      this.state.value = '';
+      this.newRender();
+    }
   }
 
   handleDelete(i, event) {
@@ -46,7 +50,7 @@ class TodoList extends React.Component {
         <div>
           <h1> TODO LIST </h1>
             <label>
-              Name:
+              Title :
               <input type="text" value={this.state.value} onChange={this.handleChange} />
             </label>
             <input type="button" value="Submit" onClick={this.handleClick} />
@@ -54,7 +58,7 @@ class TodoList extends React.Component {
               this.state.todoList.map((item, i) => (
                   <div>
                     <input type="checkbox" checked={item.checked} onChange={this.handleCheck.bind(this, item, i)}/>
-                    <span>{item.checked ? <del>{item.value}</del> : item.value}</span>
+                    <span>{item.checked ? <del class='deleted'>{item.value}</del> : item.value}</span>
                     <input type="button" value="delete" onClick={this.handleDelete.bind(this, i)}/>
                   </div>
               ))
