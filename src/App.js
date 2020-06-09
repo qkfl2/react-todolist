@@ -4,23 +4,64 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+     <TodoList />
   );
+}
+
+class TodoList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {value: '', todoList: [], delIdx:[]};
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleClick(event) {
+    this.state.todoList.push({'value': this.state.value, 'checked': false});
+    this.state.value = '';
+    this.newRender();
+  }
+
+  handleDelete(i, event) {
+    this.state.todoList.splice(i, 1)
+    this.newRender();
+  }
+
+  handleCheck(item, i, event) {
+    this.state.todoList[i].checked = !this.state.todoList[i].checked
+    this.newRender();
+  }
+
+  newRender() {
+    this.setState({ todoList: this.state.todoList, value: this.state.value })
+  }
+
+  render() {
+    return (
+        <div>
+          <h1> TODO LIST </h1>
+            <label>
+              Name:
+              <input type="text" value={this.state.value} onChange={this.handleChange} />
+            </label>
+            <input type="button" value="Submit" onClick={this.handleClick} />
+            {
+              this.state.todoList.map((item, i) => (
+                  <div>
+                    <input type="checkbox" checked={item.checked} onChange={this.handleCheck.bind(this, item, i)}/>
+                    <span>{item.checked ? <del>{item.value}</del> : item.value}</span>
+                    <input type="button" value="delete" onClick={this.handleDelete.bind(this, i)}/>
+                  </div>
+              ))
+            }
+        </div>
+    );
+  }
 }
 
 export default App;
